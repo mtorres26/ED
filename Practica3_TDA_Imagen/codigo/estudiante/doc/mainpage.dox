@@ -1,6 +1,5 @@
-/*! \mainpage Título de la página principal
-
-@image html doxyque.png "Pie de foto"
+/*! \mainpage Práctica 1: Alberto Ortega Vílchez y Miguel Torres Alonso (Estructura de Datos)
+@image html Lena-and-its-Canny-edge-based-image-95.png "Imágen de 'Lena', sirve como imagen de prueba para los algoritmos de compresión de imagen y otras técnicas de procesado de imagen y se ha convertido de facto en un estándar industrial y científico."
 
 # Información sobre Doxygen
 Doxygen admite el uso de la [sintaxis de Markdown (Consulta aquí los comandos básicos)](https://www.markdownguide.org/basic-syntax).
@@ -23,19 +22,77 @@ mayor parte de la sintaxis de Doxygen para comentar código en su
 
 # Introducción
 
-Mucho motril
+Práctica 1 de la asignatura [Estructura de Datos](https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/estructura-datos)
+del [grado en Ingeniería Informática por la Universidad de Granada](https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica).
+En ella se nos pide implementar el _TDA Imagen_ e implementar 5 funciones para el procesamiento de imágenes. Estas son:
+- Crop
+- Zoom2X
+- Subsample
+- AdjustContrast
+- ShuffleRows
+
+> Todas las funciones pertenecen a la clase Image
 
 # Ejecutables
 
-@image html invert.png
 ## Negativo:
+@image html invert.png
 
-Calcula el negativo de una imagen
+Calcula el negativo de una imagen.
 
 > __negativo__ \<FichImagenOriginal\> \<FichImagenDestino\>
 @param "<FichImagenOriginal>" Imagen PGM a la que se va a calcular
 @param <FichImagenDestino> Imagen PGM resultado de calcular el negativo
 
+--
 
+## Subimagen:
+Genera una imagen de tamaño menor o igual que la original.
+> __subimagen__ <Fich_Orig> <Fich_Rdo> <Fila> <Col> <Filas_Sub> <Cols_Sub>
+@param <Fich_Orig> Nombre del fichero que contiene la imagen original.
+@param <Fich_Rdo> Nombre del fichero que contendrá la imagen resultado.
+@param <Fila> Especifica la fila (de la imagen original) de la esquina superior izquierda de la subimagen a extraer.
+@param <Col> Especifica la columna (de la imagen original) de la esquina superior izquierda de la subimagen a extraer.
+@param <Filas_Sub> Número de filas de la subimagen que se va a extraer.
+@param <Cols_Sub> Número de columnas de la subimagen que se va a extraer.
+
+--
+
+## Zoom:
+Genera una imagen ampliada de la original.
+> __zoom__ <Fich_Orig> <Fich_Rdo> <Fila> <Col> <Lado>
+@param <Fich_Orig> Nombre del fichero que contiene la imagen original.
+@param <Fich_Rdo> Nombre del fichero que contendrá la imagen resultado.
+@param <Fila> Especifica la fila (de la imagen original) de la esquina superior izquierda de la imagen a ampliar.
+@param <Col> Especifica la columna (de la imagen original) de la esquina superior izquierda de la imagen a ampliar.
+@param <Lado> Tamaño del lado del cuadrado.
+
+--
+
+## Icono:
+Genera una imagen de un tamaño muy reducido a partir de una imagen original.
+> __icono__ <Fich_Orig> <Fich_Rdo> <Factor>
+@param <Fich_Orig> Nombre del fichero que contiene la imagen original.
+@param <Fich_Rdo> Nombre del fichero que contendrá la imagen resultado.
+@param <Factor> Factor de reducción.
+
+--
+
+## Contraste:
+Generar una imagen de niveles de gris con más contraste que la original.
+> __contraste__ <Fich_Orig> <Fich_Rdo> <E1> <E2> <S1> <S2>
+@param <Fich_Orig> Nombre del fichero que contiene la imagen original.
+@param <Fich_Rdo> Nombre del fichero que contendrá la imagen resultado.
+@param <E1> Umbral inferior de la imagen de entrada.
+@param <E2> Umbral superior de la imagen de entrada.
+@param <S1> Umbral inferior de la imagen de salida.
+@param <S2> Umbral superior de la imagen de salida.
+
+--
+
+## Barajar:
+Genera una imagen con las filas de píxeles barajadas con respecto de la imagen original.
+> __barajar__ <Fich_Orig> <Fich_Rdo>
+@param
 
 */
