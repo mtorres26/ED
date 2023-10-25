@@ -1,3 +1,8 @@
+/**
+ * @file zoom.cpp
+ * @brief Programa que genera una imagen ampliada de la original.
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
 
 #include <cstring>
 #include <cassert>

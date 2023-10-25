@@ -1,6 +1,9 @@
-//
-// Created by jose y alberto on 19/10/22.
-//
+/**
+ * @file contraste.cpp
+ * @brief Programa que genera una imagen de niveles de gris con más contraste que la original.
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
+
 #include <cstring>
 #include <cassert>
 #include <iostream>

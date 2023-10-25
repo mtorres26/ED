@@ -1,4 +1,8 @@
-
+/**
+ * @file barajar.cpp
+ * @brief Programa que genera una imagen con las filas de píxeles barajadas con respecto de la imagen original.
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
 #include <cstring>
 #include <cassert>
 #include <iostream>

@@ -1,3 +1,9 @@
+/**
+ * @file icono.cpp
+ * @brief Programa que genera una imagen de un tamaño muy reducido a partir de una imagen original.
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
+
 #include <iostream>
 #include <cstring>
 #include <cstdlib>

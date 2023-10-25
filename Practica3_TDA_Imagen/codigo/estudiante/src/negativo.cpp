@@ -1,6 +1,8 @@
-// Fichero: negativo.cpp
-// Calcula el negativo de una imagen PGM
-//
+/**
+ * @file negativo.cpp
+ * @brief Programa que genera el negativo de una imagen
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
 
 #include <iostream>
 #include <cstring>
@@ -43,9 +45,7 @@ int main (int argc, char *argv[]){
   cout << "Dimensiones de " << origen << ":" << endl;
   cout << "   Imagen   = " << image.get_rows()  << " filas x " << image.get_cols() << " columnas " << endl;
 
-  // Calcular el negativo
-  for (int i=0; i<image.size(); i++)
-      image.set_pixel(i,255-image.get_pixel(i));
+  image.Invert();
 
   // Guardar la imagen resultado en el fichero
   if (image.Save(destino))

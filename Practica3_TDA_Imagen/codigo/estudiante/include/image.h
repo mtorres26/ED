@@ -22,7 +22,7 @@ enum LoadResult: unsigned char {
 
 
 /**
-  @brief T.D.A. Imagen Alberto Ortega Vilchez y Miguel Torres Alonso.
+  @brief T.D.A. Imagen
 
   Una instancia del tipo de dato abstracto Imagen nos permite almacenar imágenes de intensidades.
 
@@ -32,8 +32,8 @@ enum LoadResult: unsigned char {
 
   \#include <Imagen.h>
 
-  @author Javier Abad
-  @author Guillermo Gómez
+  @author Alberto Ortega Vilchez
+  @author Miguel Torres Alonso
   @date Septiembre 2021
 
 **/
@@ -248,7 +248,10 @@ public :
       */
     bool Load (const char * file_path);
 
-    // Invierte
+    /**
+     * @brief Invierte los píxeles de una imagen
+     * @post La imagen queda invertida
+     */
     void Invert();
 
     // Modifica el contraste de una Imagen .
@@ -264,9 +267,6 @@ public :
      * @post El objeto que llama a la función es modificado
      */
     void AdjustContrast (byte in1, byte in2, byte out1, byte out2);
-
-    // Calcula la media de los píxeles de una imagen entera o de un fragmento de ésta.
-    double Mean (int i, int j, int height, int width) const;
 
     // Genera un icono como reducción de una imagen.
     /**
@@ -299,8 +299,8 @@ public :
       * @param height Número a sumar a nrow.
       * @param width Número a sumar a ncol
       * @pre @p Los valores dados tienen que estar dentro de las coordenadas de la imagen y no salirse de ella
-      * @return Devuelve la imagen aumentada si nada ha fallado
-      * @post La imagen que llama a la función no se modifica
+      * @return La imagen ampliada si nada ha fallado
+      * @post El objeto que llama a la función no se modifica
       */
     Image Zoom2X(int nrow, int ncol, int height, int width) const;
 

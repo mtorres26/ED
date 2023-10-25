@@ -1,4 +1,8 @@
-
+/**
+ * @file subimagen.cpp
+ * @brief Programa que genera una imagen de tamaño menor o igual que la original.
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
 
 #include <iostream>
 #include <cstring>
@@ -17,7 +21,7 @@ int main(int argc, char *argv[]){
     // Comprobar validez de la llamada
     if (argc != 7){
         cerr << "Error: Numero incorrecto de parametros.\n";
-        cerr << "Uso: negativo <FichImagenOriginal> <FichImagenDestino>\n";
+        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino>\n";
         exit (1);
     }
 
