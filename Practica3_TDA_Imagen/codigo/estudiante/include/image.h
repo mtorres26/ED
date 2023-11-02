@@ -32,8 +32,8 @@ enum LoadResult: unsigned char {
 
   \#include <Imagen.h>
 
-  @author Alberto Ortega Vilchez
-  @author Miguel Torres Alonso
+  @author Javier Abad
+  @author Guillermo Gómez
   @date Septiembre 2021
 
 **/
@@ -43,16 +43,18 @@ class Image{
     /**
          @page page_repImagen Representación del TDA Imagen
 
-         @section sec_Image_A Título A
+         @section sec_Image_A Matriz
 
+         Dispondremos de un puntero a punteros de tipo 'byte' (realmente unsigned char, pero por sencillez utilizamos typedef) que realizará el papel de matriz, donde un puntero apuntará a un vector de punteros
+         los cuales representan cada uno de ellos una fila de la imagen o lo que es lo mismo, un vector de bytes.
 
-         Contenido de la sección A.
+         > Podremos acceder a una imagen bien con doble indexación como si de una matriz se tratase: img[i][j],
+         >> o bien de manera continua como si de un vector de nfilas * ncolumnas se tratase: img[i].
 
-         @section sec_Image_B Título  B
+         Dispondremos de las funciones \ref Invert, \ref Crop, \ref Zoom2x, \ref Subsample, \ref AdjustContrast y \ref ShuffleRows.
 
-         Contenido de la sección B.
+         Respectivamente, estas funciones serán usadas para los programas Negativo, Subimagen, Zoom, Icono, Contraste y Barajar respectivamente.
 
-         Referencia a la \ref sec_Image_A
        **/
 private :
 
@@ -189,17 +191,17 @@ public :
       */
     int size() const;
 
-    /**
-      * @brief Asigna el valor valor al píxel (@p i, @p j) de la imagen.
-      * @param i Fila de la imagen en la que se encuentra el píxel a escribir .
-      * @param j Columna de la imagen en la que se encuentra el píxel a escribir.
-      * @param value Valor que se escribirá en el píxel (@p i, @p j) .
-      * @pre O <= @p i < get_rows()
-      * @pre O <= @p j < get_cols()
-      * @pre O <= @p value <= 255
-      * @post El píxel (@p i, @p j) de la imagen se modificará y contendrá valor @p value.
-      * Los demás píxeles permanecerán iguales.
-      */
+/**
+  * @brief Asigna el valor valor al píxel (@p i, @p j) de la imagen.
+  * @param i Fila de la imagen en la que se encuentra el píxel a escribir .
+  * @param j Columna de la imagen en la que se encuentra el píxel a escribir.
+  * @param value Valor que se escribirá en el píxel (@p i, @p j) .
+  * @pre O <= @p i < get_rows()
+  * @pre O <= @p j < get_cols()
+  * @pre O <= @p value <= 255
+  * @post El píxel (@p i, @p j) de la imagen se modificará y contendrá valor @p value.
+  * Los demás píxeles permanecerán iguales.
+  */
     void set_pixel (int i, int j, byte value);
 
     /**
@@ -249,83 +251,92 @@ public :
     bool Load (const char * file_path);
 
     /**
-     * @brief Invierte los píxeles de una imagen
-     * @post La imagen queda invertida
+     * @refitem Invert
+     * @brief Invierte una imagen
+     * @post La imagen queda modificada con su equivalente en negativo
      */
     void Invert();
 
-    // Modifica el contraste de una Imagen .
     /**
-     * @brief Modifica el contraste de una imagen.
-     * @param in1 Umbral inferior de la imagen de entrada
-     * @param in2 Umbral superior de la imagen de entrada
-     * @param out1 Umbral inferior de la imagen de salida
-     * @param out2 Umbral superior de la imagen de salida
-     * @pre @p 0 <= (in1, in2, int3, int4) <= 255.
-                in1 < in2,
-                out1 <out2
-     * @post El objeto que llama a la función es modificado
+     * @refitem Crop
+     * @brief Genera un recorte de una imagen
+     * @param nrow Fila inicial para recortar
+     * @param ncol Columna inicial para recortar
+     * @param height Número de filas que vamos a recortar
+     * @param width Número de columnas que vamos a recortar
+     * @post El objeto que llama a la función no se modifica
+     * @return Imagen con el recorte
      */
-    void AdjustContrast (byte in1, byte in2, byte out1, byte out2);
+    Image Crop(int nrow, int ncol, int height, int width) const;
 
-    // Genera un icono como reducción de una imagen.
+
     /**
-     * @brief Genera un ícono como reducción de una imagen.
-     * @param factor Factor de reducción de la imgagen original con respecto al ícono
-     * @pre @p Factor > 0
-     * @return La imagen iconizada
-     * @post La imagen no se modifica. La imagen resultante tendrá tamaño int(filas/factor) X int(columnas/factor). Descartando los decimales de la división
+     * @refitem Zoom2x
+     * @brief Genera una imagen aumentada 2x
+     * @param fil Representa la coordenada fila de la esquina superior izquierda de la subimagen que vamos a extraer
+     * @param col Representa la coordenada columna de la esquina superior izquierda de la subimagen que vamos a extraer
+     * @param lado Representa el tamaño del lado del cuadrado
+     * @pre El cuadrado deberá estar completamente inscrito en la imagen original
+     * @post El objeto que llama a la función no se modifica
+     * @return La imagen aumentada
+     */
+    Image Zoom2X(int fil, int col, int lado) const;
+    // Hemos cambiado el número de argumentos de la función Zoom2x
+
+    /**
+     * @refitem Subsample
+     * @brief Genera un icono como reducción de una imagen
+     * @param factor
+     * @pre factor > 0
+     * @return Imagen iconizada
+     * @post La imagen no se modifica
+     * @post La imagen resultante tendrá tamaño int(filas/factor) X int(columnas/factor). Descartando los decimales de la división
      */
     Image Subsample(int factor) const;
 
-    // Genera una subimagen.
     /**
-      * @brief Genera una subimagen.
-      * @param nrow Número de fila donde se va a empezar a recortar.
-      * @param ncol Número de columnas donde se va a empezar a recortar.
-      * @param height Número a sumar a nrow.
-      * @param width Número a sumar a ncol
-      * @pre @p Los valores recibidos como parámetros tienen que estar dentro de las coordenadas de la imagen y no salirse de ella.
-      * @return Imagen con recorte
-      * @post El objeto que llama a la función no se modifica
-      */
-    Image Crop(int nrow, int ncol, int height, int width) const;
-
-    // Genera una imagen aumentada 2x.
-    /**
-      * @brief Realiza un aumento x2 a una zona específica de una imagen.
-      * @param nrow Número de fila donde se va a empezar a recortar.
-      * @param ncol Número de columnas donde se va a empezar a recortar.
-      * @param height Número a sumar a nrow.
-      * @param width Número a sumar a ncol
-      * @pre @p Los valores dados tienen que estar dentro de las coordenadas de la imagen y no salirse de ella
-      * @return La imagen ampliada si nada ha fallado
-      * @post El objeto que llama a la función no se modifica
-      */
-    Image Zoom2X(int nrow, int ncol, int height, int width) const;
-
-    // Metodos aux para Zoon2x
-    /**
-      * @brief Método auxiliar de zoom para calcular la interpolación de las columnas
-      */
-    void interpolarCol();
-
-    /**
-     * @brief Método auxiliar de zoom para calcular la interpolación de las filas
+     * @refitem AdjustContrast
+     * @brief Modifica el contraste de una Imagen
+     * @param in1 Umbral inferior de la imagen de entrada (a)
+     * @param in2 Umbral superior de la imagen de entrada (b)
+     * @param out1 Umbral inferior de la imagen de salida (min)
+     * @param out2 Umbral superior de la imagen de salida (max)
+     * @pre 0 <= ( in1, in2, out1, out2 ) <= 255
+     * @pre in1 < in2
+     * @pre out1 < out2
+     * @post El objeto que llama a la función es modificado
      */
-    void interpolarFil();
+    void AdjustContrast (byte in1, byte in2, byte out1, byte out2) ;
 
-    // Baraja pseudoaleatoriamente las filas de una imagen.
     /**
-     * @brief Realiza un recorte específico de una imagen.
-     * @pre @p Rows < 9973
-     * @return La imagen barajada
-     * @post El objeto que llama al método contiene ahora una nueva imagen igual que la anterior pero
-                con las filas ordenadas según el siguiente algoritmo: r = (r * p) % row
+     * @refitem ShuffleRows
+     * @brief Baraja pseudoaleatoriamente las filas de una imagen.
+     * @pre rows < 9973
+     * @post El objeto que llama al método contiene ahora una nueva imagen igual que la anterior
+     * pero con las filas ordenadas según el siguiente algoritmo:
+     * R = (r*p) mod rows, donde:
+     *'R' es el núevo índice de la fila 'r'
+     *'p' es un coprimo de rows --> 2 números son coprimos si no tienen ningún factor primo común (9973 será el nº primo por defecto)
+     * rows es el número de filas de la imagen.
      */
     void ShuffleRows();
+
+    /**
+     * @brief Calcula la media de los píxeles de una imagen entera o de un fragmento de ésta.
+     * @param i
+     * @param j
+     * @param height
+     * @param width
+     * @return
+     */
+    double Mean (int i, int j, int height, int width) const;
+
+    /**
+     * @brief Método auxiliar de prueba, no afecta al desarrollo de la práctica
+     */
+    void imprimeBytes() const;
+
 } ;
 
 
 #endif // _IMAGEN_H_
-

@@ -9,19 +9,18 @@
 #include <cstdlib>
 
 #include <image.h>
-#include <imageIO.h>
 
 using namespace std;
 
-int main(int argc, char *argv[]){
+int main (int argc, char *argv[]){
     char *origen, *destino; // nombres de los ficheros
     Image image;
-    Image new_imagen;
+    Image nueva; // Será la nueva imagen (recortada de la original)
 
     // Comprobar validez de la llamada
     if (argc != 7){
         cerr << "Error: Numero incorrecto de parametros.\n";
-        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino>\n";
+        cerr << "Uso: negativo <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>\n";
         exit (1);
     }
 
@@ -44,28 +43,54 @@ int main(int argc, char *argv[]){
     // Mostrar los parametros de la Imagen
     cout << endl;
     cout << "Dimensiones de " << origen << ":" << endl;
-    cout << "   Imagen   = " << image.get_rows()  << " filas x " << image.get_cols() << " columnas " << endl;
+    cout << "(Imagen original)   = " << image.get_rows()  << " filas x " << image.get_cols() << " columnas " << endl;
 
-    // Calcular el crop
-    int fila = atoi(argv[3]),
-            columna = atoi(argv[4]),
-            num_filas = atoi(argv[5]),
-            num_columnas = atoi(argv[6]);
+    // ///////////////////// //
+    // LLAMAR AL MÉTODO CROP //
+    // ///////////////////// //
 
-    new_imagen = image.Crop(fila, columna, num_filas, num_columnas);
+    // Primero almacenamos los nuevos parámetros de entrada que necesita crop
+    int fila = atoi(argv[3]);
+    int columna = atoi(argv[4]);
+    int num_filas = atoi(argv[5]);
+    int num_columnas = atoi(argv[6]);
 
+    // Comprobaremos que los parámetros pasados son válidos para realizar el recorte:
+    if((fila>=0 && fila<=image.get_rows())&&(columna>=0 && columna)&&(fila+num_filas<=image.get_rows())&&((columna+num_columnas)<=image.get_cols())){
+
+        // Si los parámetros son válidos para recortar la imagen, ejecutamos Crop
+        nueva = image.Crop(fila,columna,num_filas,num_columnas);
+
+    }else{
+        cout << endl << "//////////////////////////////////////////////////////////////" << endl;
+        cout << "ERROR EN EL PASO DE PARÁMETROS" << endl
+             << "LOS PARÁMETROS DEBEN AJUSTARSE AL TAMAÑO DE LA IMAGEN ORIGINAL" << endl;
+
+        cout << "//////////////////////////////////////////////////////////////" << endl << endl;
+
+
+        cout << "Fila -> Entre 0 y " << image.get_rows() << endl
+             << "Columna -> Entre 0 y " << image.get_cols() << endl
+             << "Num_filas --> Fila + num_filas deberá ser menor que " << image.get_rows() << endl
+             << "Num_columnas --> Columna + num_columnas deberá ser menor que " << image.get_cols() << endl;
+
+        return 1;
+    }
+
+
+    // ///////////////////// //
+
+    // Dimensiones de "destino"
     cout << endl;
     cout << "Dimensiones de " << destino << ":" << endl;
-    cout << "   Imagen   = " << new_imagen.get_rows()  << " filas x " << new_imagen.get_cols() << " columnas " << endl;
+    cout << "(Imagen recortada) = " << nueva.get_rows() << " filas x " << nueva.get_cols() << " columnas" << endl;
 
     // Guardar la imagen resultado en el fichero
-    if (new_imagen.Save(destino))
+    if (nueva.Save(destino))
         cout  << "La imagen se guardo en " << destino << endl;
     else{
         cerr << "Error: No pudo guardarse la imagen." << endl;
         cerr << "Terminando la ejecucion del programa." << endl;
         return 1;
     }
-
-    return 0;
 }
