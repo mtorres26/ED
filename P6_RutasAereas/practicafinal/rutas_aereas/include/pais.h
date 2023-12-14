@@ -22,7 +22,7 @@ using namespace std;
 **/
 
 #include "punto.h"
-#include <string.h>
+#include <string>
 
 class Pais {
 private:

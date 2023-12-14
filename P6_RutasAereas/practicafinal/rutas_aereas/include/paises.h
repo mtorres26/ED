@@ -29,6 +29,7 @@ using namespace std;
 class Paises {
 private:
     set <Pais> datos;
+
 public:
     Paises();
 

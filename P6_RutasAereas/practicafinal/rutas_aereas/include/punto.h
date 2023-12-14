@@ -30,9 +30,19 @@ public:
 
     Punto(double lat, double lon);
 
-    Punto &operator=(const Punto &orig);
-
     double getLatitud() const;
 
     double getLongitud() const;
+
+    void setLongitud();
+
+    void setLatitud();
+
+    Punto &operator=(const Punto &orig);
+
+    bool operator==(const Punto &otro) const;
+
+    bool operator!=(const Punto &otro) const;
+
+    // friend ostream & operator<<(ostream &os, const Punto &pt);
 };

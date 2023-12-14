@@ -28,8 +28,9 @@ using namespace std;
 class Ruta {
 private:
     string codigo;
-    set <Punto> puntos;
+    set<Punto> puntos;
 
 public:
+
 
 };
