@@ -1,43 +1,94 @@
+#include "pais.h"
+#include <iostream>
+
+using namespace std;
+
+// ///////////// //
+// CONSTRUCTORES //
+// ///////////// //
+
 Pais::Pais() {
-    this.p = Punto();
-    this.pais = "";
-    this.bandera = "";
+    this->p = Punto();
+    this->pais = "";
+    this->bandera = " ";
 }
 
-Punto Pais::GetPunto() const {
+Pais::Pais(Punto _p, string _pais, string _bandera) {
+    this->p = _p;
+    this->pais = _pais;
+    this->bandera = _bandera;
+}
 
+// ///////////////// //
+// GETTERS Y SETTERS //
+// ///////////////// //
+
+Punto Pais::GetPunto() const {
+    return this->p;
 }
 
 string Pais::GetPais() const {
-
+    return this->pais;
 }
 
 string Pais::GetBandera() const {
-
+    return this->bandera;
 }
 
-bool Pais::operator<(const Pais &P) const{
-
+void Pais::setPunto(const Punto &_punto) {
+    this->p = _punto;
 }
 
-bool Pais::operator==(const Pais &P) const{
-
+void Pais::setPais(string _pais) {
+    this->pais = _pais;
 }
 
-bool Pais::operator==(const Punto &P) const{
-
+void Pais::setBandera(string _bandera) {
+    this->bandera = _bandera;
 }
 
-friend istream &operator>>(istream &is, Pais &P) {
-    double lat, lng;
+// //////////////////////// //
+// SOBRECARGA DE OPERADORES //
+// //////////////////////// //
 
-    is >> lat >> lng >> P.pais >> P.bandera;
+Pais &Pais::operator=(const Pais &P) {
+    if (this != &P) {
+        this->p = P.GetPunto();
+        this->pais = P.GetPais();
+        this->bandera = P.GetBandera();
+    }
 
-    P.p = Punto(lat, lng, "");
-    return is;
+    return *this;
 }
 
-friend ostream &operator<<(ostream &os, const Pais &P) {
-    os << P.p << " " << P.pais << " " << P.bandera << endl;
-    return os;
+bool Pais::operator<(const Pais &P) const {
+    bool menor = false;
+
+    // Suponemos que se comprobará si es menor en cuanto a orden alfabético
+    if (this->pais < P.GetPais()) {
+        menor = true;
+    }
+
+    return menor;
+}
+
+bool Pais::operator==(const Pais &P) const {
+    bool mismoPais = false;
+
+    if (this->pais == P.pais && this->bandera == P.bandera) {
+        mismoPais = true;
+    }
+
+    return mismoPais;
+}
+
+bool Pais::operator==(const Punto &P) const {
+    bool mismoPunto = false;
+
+    if (this->p == P) {
+        mismoPunto = true;
+    }
+
+    return mismoPunto;
+
 }

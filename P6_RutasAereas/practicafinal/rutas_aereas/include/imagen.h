@@ -151,25 +151,40 @@ public :
     const Pixel &operator()(int i, int j) const;
 
     /**
-     * @brief Crea una imagen con
+     * @brief Crea una imagen
      * @param nombre Nombre que tendrá la nueva imagen
      */
     void EscribirImagen(const char *nombre);
 
     /**
-     *
+     * @brief Lee una imagen a partir de su nombre y su tipo.
      * @param nimagen
-     * @param nombre_mascara
+     * @param nombre_mascara ("" por defecto)
      */
     void LeerImagen(const char *nimagen, const string &nombre_mascara = "");
 
-
+    /**
+     * @brief Pone a 0 todas las 'casillas' de la imagen.
+     */
     void LimpiarTransp();
 
-
+    /**
+     *
+     * @param posi
+     * @param posj
+     * @param I
+     * @param tippegado
+     */
     void PutImagen(int posi, int posj, const Imagen &I, Tipo_Pegado tippegado = OPACO);
 
-
+    /**
+     *
+     * @param posi
+     * @param posj
+     * @param dimi
+     * @param dimj
+     * @return
+     */
     Imagen ExtraeImagen(int posi, int posj, int dimi, int dimj);
 
 };

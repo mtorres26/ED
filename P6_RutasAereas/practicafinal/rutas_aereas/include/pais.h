@@ -1,3 +1,5 @@
+#ifndef PRACTICAFINAL_PAIS_H
+#define PRACTICAFINAL_PAIS_H
 /**
  * @file pais.h
  * @brief Cabecera para la clase Pais
@@ -13,7 +15,7 @@ using namespace std;
 
   Para poder usar el TDA Pais se debe incluir el fichero
 
-  \#include <pais.h>
+  \#include "pais.h"
 
   @author Alberto Ortega Vílchez
   @author Miguel Torres Alonso
@@ -23,6 +25,7 @@ using namespace std;
 
 #include "punto.h"
 #include <string>
+#include <iostream>
 
 class Pais {
 private:
@@ -32,17 +35,33 @@ private:
 
 public:
     Pais();
+    Pais(Punto _p, string _pais, string _bandera);
 
-    Punto GetPunto() const;
+    Punto GetPunto()const;
+    string GetPais()const;
+    string GetBandera()const;
 
-    string GetPais() const;
+    void setPunto(const Punto &_punto);
+    void setPais(string _pais);
+    void setBandera(string _bandera);
 
-    string GetBandera() const;
+    Pais & operator=(const Pais &P);
+    bool operator<(const Pais &P)const;
+    bool operator==(const Pais &P)const;
+    bool operator==(const Punto &P)const;
 
-    bool operator<(const Pais &P) const;
+    friend istream &operator>>(istream &is, Pais &P) {
+        double lat, lng;
 
-    bool operator==(const Pais &P) const;
+        is >> lat >> lng >> P.pais >> P.bandera;
 
-    bool operator==(const Punto &P) const;
+        P.p = Punto(lat, lng);
+        return is;
+    }
 
+    friend ostream &operator<<(ostream &os, const Pais &P) {
+        os << P.p << " " << P.pais << " " << P.bandera << endl;
+        return os;
+    }
 };
+#endif
