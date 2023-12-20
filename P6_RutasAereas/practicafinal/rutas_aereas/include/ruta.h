@@ -1,11 +1,13 @@
-#ifndef PRACTICAFINAL_RUTA_H
-#define PRACTICAFINAL_RUTA_H
 /**
  * @file ruta.h
  * @brief Cabecera para la clase Ruta
  * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
  */
 
+#ifndef PRACTICAFINAL_RUTA_H
+#define PRACTICAFINAL_RUTA_H
+
+#include<set>
 #include<list>
 #include<string>
 #include "punto.h"
@@ -19,7 +21,7 @@ using namespace std;
 
   Para poder usar el TDA Ruta se debe incluir el fichero
 
-  \#include "ruta.h"
+  \#include <ruta.h>
 
   @author Alberto Ortega Vílchez
   @author Miguel Torres Alonso
@@ -28,11 +30,17 @@ using namespace std;
 **/
 
 class Ruta {
+
 private:
     string codigo;
-    list <Punto> puntos;
+    list<Punto> puntos;
+
 
 public:
+
+    // ///////////// //
+    // CONSTRUCTORES //
+    // ///////////// //
     /**
      * @brief Crea ruta vacía
      */
@@ -43,25 +51,24 @@ public:
      * @param _cod Código de la nueva ruta.
      * @param _p Lista de puntos de la nueva ruta
      */
-    Ruta(string _cod, list <Punto> &_p);
+    Ruta(string _cod, list<Punto> &_p);
+
+
+    // ///////////////// //
+    // GETTERS Y SETTERS //
+    // ///////////////// //
 
     /**
      * @brief Devuelve el código de la ruta
      * @return El código de la ruta
      */
-    string getCodigoRuta() const;
+    string getCodigoRuta()const;
 
     /**
-    * @brief Devuelve la lista de puntos de la ruta
-    * @return La lista de puntos de la ruta.
-    */
-    list <Punto> getPuntosRuta() const;
-
-    /**
-     * @brief Añade un nuevo punto a la ruta
-     * @param pt Nuevo punto a insertar
+     * @brief Devuelve la lista de puntos de la ruta
+     * @return La lista de puntos de la ruta.
      */
-    void insertaPunto(const Punto &pt);
+    list<Punto> getPuntosRuta()const;
 
     /**
      * @brief Establece un nuevo código para la ruta
@@ -71,54 +78,77 @@ public:
 
     /**
      * @brief Establece una nueva lista de puntos para la ruta
-     * @param pts Nueva lista de puntos
+     * @param _puntos Nueva lista de puntos
      */
-    void setPuntosRuta(list <Punto> pts);
+    void setPuntosRuta(const list<Punto> &_puntos);
+
+
+    // ///////////// //
+    // OTROS MÉTODOS //
+    // ///////////// //
+
+    /**
+     * @brief Añade un nuevo punto a la ruta
+     * @param p
+     */
+    void insertaPunto(const Punto &p);
+
+    /**
+     * @brief Muestra por pantalla los puntos que contiene la Ruta de manera enumerada
+     */
+    void muestraPuntos();
+
+    // //////////////////////// //
+    // SOBRECARGA DE OPERADORES //
+    // //////////////////////// //
 
     /**
      * @brief Sobrecarga del operador '='
-     * @param otro Contiene la nueva ruta
+     * @param P Contiene la nueva ruta
      * @return Ruta modificada
      */
-    Ruta &operator=(const Ruta &otro);
+    Ruta &operator=(const Ruta &P);
 
     /**
      * @brief Sobrecarga del operador '<' (en función del número de puntos)
      * @param P Ruta con la que queremos comparar la actual
      * @return TRUE si la ruta actual tiene menos puntos que P, FALSE en caso contrario.
      */
-    bool operator<(const Ruta &P) const;
+    bool operator<(const Ruta &P)const;
 
     /**
      * @brief Sobrecarga del operador '=='
-     * @param r Ruta con la que comparamos la actual
+     * @param P Ruta con la que comparamos la actual
      * @return TRUE si la ruta P es igual que la actual, FALSE en caso contrario.
      */
-    bool operator==(const Ruta &r) const;
+    bool operator==(const Ruta &P)const;
 
     /**
     * @brief Sobrecarga del operador '!='
     * @param P Ruta con la que comparamos la actual
     * @return FALSE si la ruta P es igual que la actual, TRUE en caso contrario.
     */
-    bool operator!=(const Ruta &P) const;
+    bool operator!=(const Ruta &P)const;
+
+    // OPERADORES DE E/S
 
     /**
-    * @brief Sobrecarga del operador de entrada '>>'
-    *
-    * Formato de una ruta:
-    * Codigo_Ruta Número_Puntos_De_La_Ruta <Cada una de los puntos de la ruta separados por un espacio en blanco>
-    * Ejemplo:
-    * R1 2 (34.52041,69.20082) (52.50786,13.42614)
-    *
-    * @param is Flujo de entrada
-    * @param P Ruta en la que escribimos
-    * @return Flujo de entrada
-    */
-    friend istream &operator>>(istream &is, Ruta &P) {
+     * @brief Sobrecarga del operador de entrada '>>'
+     *
+     * Formato de una ruta:
+     * Codigo_Ruta Número_Puntos_De_La_Ruta <Cada una de los puntos de la ruta separados por un espacio en blanco>
+     * Ejemplo:
+     * R1 2 (34.52041,69.20082) (52.50786,13.42614)
+     *
+     * @param is Flujo de entrada
+     * @param P Ruta en la que escribimos
+     * @return Flujo de entrada
+     */
+    friend istream & operator>>(istream & is, Ruta & P){
         // Declaramos cada uno de los elementos que nos ayudarán a desarrollar el operador:
         string codigo_ruta;
         int num_puntos_de_la_ruta;
+        //char separador=' ';
 
         is >> codigo_ruta >> num_puntos_de_la_ruta;
 
@@ -128,36 +158,41 @@ public:
         aux.setCodigoRuta(codigo_ruta);
 
         // Añadimos cada punto a nuestra ruta:
-        for (int i = 0; i < num_puntos_de_la_ruta; i++) {
+        for(int i=0;i<num_puntos_de_la_ruta;i++){
             // Nos apoyamos en el operador >> ya sobrecargado en Punto.h
+
             is >> punto_ruta;
             aux.puntos.push_back(punto_ruta);
         }
-        P = aux;
+
+        P=aux;
+
         return is;
     }
 
     /**
-    * @brief Sobrecarga del operador de salida '<<'
-    *
-    * Formato de una ruta:
-    * Codigo_Ruta Número_Puntos_De_La_Ruta <Cada una de los puntos de la ruta separados por un espacio en blanco>
-    * Ejemplo:
-    * R1 2 (34.52041,69.20082) (52.50786,13.42614)
-    * @param os Flujo de salida
-    * @param P Ruta que se mostrará por pantalla
-    * @return Flujo de salida
-    */
-    friend ostream &operator<<(ostream &os, const Ruta &P) {
+     * @brief Sobrecarga del operador de salida '<<'
+     *
+     * Formato de una ruta:
+     * Codigo_Ruta Número_Puntos_De_La_Ruta <Cada una de los puntos de la ruta separados por un espacio en blanco>
+     * Ejemplo:
+     * R1 2 (34.52041,69.20082) (52.50786,13.42614)
+     * @param os Flujo de salida
+     * @param P Ruta que se mostrará por pantalla
+     * @return Flujo de salida
+     */
+    friend ostream & operator<<(ostream & os, const Ruta &P){
         string c = P.codigo;
-        int tam = P.puntos.size();
+        int tam=P.puntos.size();
+        //string separador=" ";
 
         os << c << " " << tam << " ";
         // Iteramos sobre la Ruta 'P' pasada, mostrando cada uno de los puntos por pantalla:
 
         list<Punto>::const_iterator it;
 
-        for (it = P.puntos.begin(); it != P.puntos.end(); it++) {
+
+        for(it=P.puntos.begin();it!=P.puntos.end();it++){
             // Nos apoyamos en el ya sobrecargado operador << de Punto, para mostrar cada punto en el formato adecuado.
             os << *it << " ";
         }
@@ -165,6 +200,8 @@ public:
         os << endl;
         return os;
     }
+
+    // CLASES ITERADORAS //
 
     class const_iterator;
 
@@ -182,30 +219,31 @@ public:
         /**
          * @brief Constructor primitivo - Crea un iterator nulo
          */
-        iterator() {
+        iterator(){
+            // No es necesario hacer nada
         }
 
         /**
          * @brief Constructor de copia
          * @param i iterator que copiamos
          */
-        iterator(const iterator &i) {
-            p = i.p;
+        iterator(const iterator &i){
+            p=i.p;
         }
 
         /**
          * @brief Constructor con parámetro(s)
          * @param i Iterador de list<Punto>
          */
-        iterator(const list<Punto>::iterator &i) {
-            p = i;
+        iterator(const list<Punto>::iterator &i){
+            p=i;
         }
 
         /**
          * @brief Sobrecarga de operador * para acceder al punto de la ruta actual
          * @return EL punto de la ruta actual
          */
-        const Punto &operator*() {
+        const Punto & operator*(){
             // Nos apoyamos en el operador '*' ya sobrecargado de Punto
             return *p;
         }
@@ -215,8 +253,8 @@ public:
          * @pre EL iterador no está al final del recorrido (Es distinto de end())
          * @return Devuelve el siguiente Punto de la ruta, y establece el iterador a esa posición.
          */
-        iterator &operator++() {
-            p++;
+        iterator & operator++(){
+            ++p;
             return *this;
         }
 
@@ -225,8 +263,21 @@ public:
          * @pre EL iterador no está al principio del recorrido (es distinto de begin())
          * @return Devuelve el Punto anterior, y establece el iterador a esa posición.
          */
-        iterator &operator--() {
-            p--;
+        iterator & operator--(){
+            --p;
+            return *this;
+        }
+
+        /**
+         * @brief Sobrecarga del operador '='
+         * @param otro Iterador que susituye al actual
+         * @return Iterador modificado
+         */
+        iterator & operator=(const iterator &otro){
+            //if(this!=&otro){
+                this->p=otro.p;
+            //}
+
             return *this;
         }
 
@@ -235,14 +286,14 @@ public:
          * @param ot Un iterator
          * @return TRUE Si el iterador pasado como parámetro es igual que 'p' y FALSE en caso contrario
          */
-        bool operator==(const iterator &ot) {
-            bool iguales = false;
+        bool operator==(const iterator &ot){
+            bool iguales=false;
 
-            if (p == ot.p) {
-                iguales = true;
+            if(p==ot.p){
+                iguales=true;
             }
 
-            return iguales;
+             return iguales;
         }
 
         /**
@@ -250,9 +301,9 @@ public:
          * @param ot Un iterator
          * @return @return FALSE Si el iterador pasado como parámetro es igual que 'p' y TRUE en caso contrario
          */
-        bool operator!=(const iterator &ot) {
+        bool operator!=(const iterator &ot){
             // Nos podemos apoyar en el opeardor == que ya hemos creado.
-            return p == ot.p;
+            return p!=ot.p;
         }
 
 
@@ -281,30 +332,31 @@ public:
         /**
          * @brief Constructor primitivo - Crea un iterator nulo
          */
-        const_iterator() {
+        const_iterator(){
+            // No es necesario hacer nada
         }
 
         /**
          * @brief Constructor de copia
          * @param i iterator que copiamos
          */
-        const_iterator(const const_iterator &i) {
-            p = i.p;
+        const_iterator(const const_iterator &i){
+            p=i.p;
         }
 
         /**
          * @brief Constructor con parámetro(s)
          * @param i Iterador de list<Punto>
          */
-        const_iterator(const list<Punto>::const_iterator &i) {
-            p = i;
+        const_iterator(const list<Punto>::const_iterator &i){
+            p=i;
         }
 
         /**
          * @brief Sobrecarga de operador * para acceder al punto de la ruta actual
          * @return EL punto de la ruta actual
          */
-        const Punto &operator*() {
+        const Punto & operator*(){
             // Nos apoyamos en el operador '*' ya sobrecargado de Punto
             return *p;
         }
@@ -314,8 +366,8 @@ public:
          * @pre EL iterador no está al final del recorrido (Es distinto de end())
          * @return Devuelve el siguiente Punto de la ruta, y establece el iterador a esa posición.
          */
-        const_iterator &operator++() {
-            p++;
+        const_iterator & operator++(){
+            ++p;
             return *this;
         }
 
@@ -324,8 +376,21 @@ public:
          * @pre EL iterador no está al principio del recorrido (es distinto de begin())
          * @return Devuelve el Punto anterior, y establece el iterador a esa posición.
          */
-        const_iterator &operator--() {
-            p--;
+        const_iterator & operator--(){
+            --p;
+            return *this;
+        }
+
+        /**
+         * @brief Sobrecarga del operador '='
+         * @param otro Iterador que susituye al actual
+         * @return Iterador modificado
+         */
+        const_iterator & operator=(const const_iterator &otro){
+            if(this!=&otro){
+                this->p=otro.p;
+            }
+
             return *this;
         }
 
@@ -334,11 +399,11 @@ public:
          * @param ot Un iterator
          * @return TRUE Si el iterador pasado como parámetro es igual que 'p' y FALSE en caso contrario
          */
-        bool operator==(const const_iterator &ot) {
-            bool iguales = false;
+        bool operator==(const const_iterator &ot){
+            bool iguales=false;
 
-            if (p == ot.p) {
-                iguales = true;
+            if(p==ot.p){
+                iguales=true;
             }
 
             return iguales;
@@ -349,9 +414,9 @@ public:
          * @param ot Un iterator
          * @return @return FALSE Si el iterador pasado como parámetro es igual que 'p' y TRUE en caso contrario
          */
-        bool operator!=(const const_iterator &ot) {
+        bool operator!=(const const_iterator &ot){
             // Nos podemos apoyar en el operador != que ya hemos creado de Punto.
-            return p != ot.p;
+            return p!=ot.p;
         }
 
 
@@ -377,9 +442,9 @@ public:
      * @brief Establecemos la funcionalidad begin() del iterator
      * @return Iterador que apunta al primer Punto de la lista de puntos
      */
-    iterator begin() {
+    iterator begin(){
         iterator it;
-        it.p = this->puntos.begin();
+        it.p=this->puntos.begin();
 
         return it;
     }
@@ -388,9 +453,9 @@ public:
      * @brief Establecemos la funcionalidad begin() del const_iterator
      * @return Iterador que apunta al primer Punto de la lista de puntos
      */
-    const_iterator begin() const {
+    const_iterator begin()const{
         const_iterator it;
-        it.p = this->puntos.begin();
+        it.p=this->puntos.begin();
 
         return it;
     }
@@ -401,9 +466,9 @@ public:
      * @brief Establecemos la funcionalidad end() del iterator
      * @return Iterador que apunta al último Punto del conjunto de puntos.
      */
-    iterator end() {
+    iterator end(){
         iterator it;
-        it.p = this->puntos.end();
+        it.p=this->puntos.end();
 
         return it;
     }
@@ -412,9 +477,9 @@ public:
      * @brief Establecemos la funcionalidad end() del const_iterator
      * @return Iterador que apunta al último Punto del conjunto de puntos.
      */
-    const_iterator end() const {
+    const_iterator end()const{
         const_iterator it;
-        it.p = this->puntos.end();
+        it.p=this->puntos.end();
 
         return it;
     }
@@ -426,13 +491,31 @@ public:
      * @param p Punto que buscamos dentro de la lista de puntos
      * @return Iterador que apunta al Punto pasado como parámetro o end() si no existe.
      */
-    iterator find(const Punto &p) {
-        iterator encontrado;
+    iterator find(const Punto &p){
+        //iterator encontrado;
 
-        list<Punto>::iterator it = this->puntos.begin();
+        list<Punto>::iterator it= this->puntos.begin();
 
         // Iteraremos sobre el conjunto de puntos mientras no encontremos
-        while ((it != this->puntos.end()) && (p != *it)) {
+        while((it!=this->puntos.end()) && (p!=*it) ){
+            it++;
+        }
+
+        return it;
+    }
+
+    /**
+     * @brief Devuelve el const_iterator que apunta al Punto pasado como parámetro
+     * @param p Punto que buscamos dentro de la lista de puntos
+     * @return const_iterator que apunta al Punto pasado como parámetro o end() si no existe.
+     */
+    const_iterator find(const Punto &p)const{
+        //const_iterator encontrado;
+
+        list<Punto>::const_iterator it;
+
+        // Iteraremos sobre el conjunto de puntos mientras no encontremos
+        while((it!=this->puntos.end()) && (p!=*it) ){
             it++;
         }
 
@@ -441,4 +524,5 @@ public:
 
 };
 
-#endif
+
+#endif //PRACTICAFINAL_RUTA_H

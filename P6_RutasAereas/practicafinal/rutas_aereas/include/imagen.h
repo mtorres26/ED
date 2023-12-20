@@ -13,6 +13,7 @@
 enum Tipo_Pegado {
     OPACO, BLENDING
 };
+
 using namespace std;
 
 struct Pixel {
@@ -169,7 +170,7 @@ public :
     void LimpiarTransp();
 
     /**
-     *
+     * @brief
      * @param posi
      * @param posj
      * @param I
@@ -177,16 +178,19 @@ public :
      */
     void PutImagen(int posi, int posj, const Imagen &I, Tipo_Pegado tippegado = OPACO);
 
+
     /**
-     *
-     * @param posi
-     * @param posj
-     * @param dimi
-     * @param dimj
-     * @return
+     * @brief Extrae una imagen desde una posición y con unas dimensiones determinadas
+     * @param posi Posición 'x' de la esquina superior izquierda de la "subimagen"
+     * @param posj Posición 'y' de la esquina superior izquierda de la "subimagen"
+     * @param dimi Número de filas de la nueva imagen
+     * @param dimj Número de columnas de la nueva imagen
+     * @return Una nueva imagen recortada
      */
     Imagen ExtraeImagen(int posi, int posj, int dimi, int dimj);
 
 };
 
 #endif //PRACTICAFINAL_IMAGEN_H
+
+

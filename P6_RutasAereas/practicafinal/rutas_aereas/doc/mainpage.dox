@@ -1,0 +1,83 @@
+/*! \mainpage Práctica 6: Alberto Ortega Vílchez y Miguel Torres Alonso (Estructura de Datos)
+@image html portada.jpeg Observamos un ejemplo del objetivo de esta práctica: Ser capaces de visualizar un mapa del mundo con rutas de un código determinado. En el ejemplo se utiliza la ruta R3.
+
+# INTRODUCCIÓN
+
+Práctica 6 de la asignatura [Estructura de Datos](https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica/estructura-datos)
+del [grado en Ingeniería Informática por la Universidad de Granada](https://www.ugr.es/estudiantes/grados/grado-ingenieria-informatica).
+
+A continuación definiremos los archivos ejecutables.
+
+Existirán aclaraciones y descripciones exhaustivas sobre la implementación de métodos y ejecutables dentro del código.
+Se verificará dentro de cada ejecutable que el paso de argumentos es correcto, y se impedirá la ejecución en caso de que no lo sea. 
+
+# EJECUTABLES
+
+Encontraremos descrita la funcionalidad de cada uno de los 3 archivos ejecutables que encontramos a lo largo de la práctica:
+
+## 1.PRUEBA PEGADO
+
+Ejemplo de lo que buscamos al tratar de pegar un avión sobre una bandera que nos servirá de ayuda para le resultado final:
+
+Sintaxis de ejecución:
+> __pruebapegado__ Bandera(existente) Avion(existente).ppm MascaraMismoAvion(existente).ppm Resultado(nueva imagen).ppm 
+
+@param Bandera(existente) - Bandera en la que pegaremos el avión
+@param Avion(existente).ppm - Avion que pegaremos en la bandera
+@param MascaraMismoAvion(existente).ppm - Máscara del avión que pegaremos
+@param Resultado(nueva imagen).ppm - Nombre de la imagen que contendrá el resultado
+
+
+EJEMPLO: "Pegar del avión número 1 sobre la bandera de españa":
+
+> __pruebapegado__ datos/imagenes/banderas/espana_reshigh.ppm datos/imagenes/aviones/avion2.ppm datos/imagenes/aviones/mascara_avion2.pgm espana_avion2_blending.ppm 0 0 1
+
+@image html pruebapegado.jpeg
+
+## 2.PRUEBA ROTACIÓN
+
+Ejemplo en el que lo que buscamos es verificar la correcta funcionalidad de la función "Rotar".
+
+Sintaxis de ejecución:
+
+> __pruebarotacion__ avion(existente)queQueremosRotar.ppm Grados avion(nuevo).ppm
+
+@param avion(existente)queQueremosRotar.ppm - Avión que deseamos rotar.
+@param Grados - Grados que queremos rotar el avión.
+@param avion(nuevo).ppm - Imagen que contendrá el resultado.
+
+EJEMPLO: "Rotar el avión definido como "avion1.ppm" 45º y almacenar el resultado como pruebarotacion.ppm":
+
+> __pruebarotacion__ datos/imagenes/aviones/avion1.ppm 45 pruebarotacion.ppm
+
+@image html pruebarotacion.jpeg
+
+
+## 3.MAIN FINAL - RUTA AÉREA
+
+Para el desarrollo de este archivo de prueba final, nos basamos en el código proporcionado por el profesorado.
+
+En particular, partimos de la implementación de la función Pintar, además del inicio del main de prueba,
+en el que se verificará el correcto funcionamiento de todos los módulos y TDA implementados, junto con una
+primera verificación de parámetros:
+
+Sintaxis de ejecución
+
+> __ruta_aerea__ paises.txt ImagenMapa DirectorioBanderas almacen_rutas.txt ImagenAvion ImagenMascaraAvion
+
+@param paises.txt - Archivo de texto con la información de todos los países.
+@param ImagenMapa - Imagen del mapa sobre el que pintaremos la ruta
+@param DirectorioBanderas - Directorio de nuestro proyecto que contiene todas las banderas
+@param almacen_rutas.txt - Archivo de texto con la información de todas las rutas.
+@param ImagenAvion - Imagen del avión que queremos que sobrevuele el mapa
+@param ImagenMascaraAvion - Imagen de la máscara del avión que queremos que sobrevuele el mapa.
+
+EJEMPLO: "El avión número 1 recorrerá el mapa 1 realizando una ruta (la que decidamos en ejecución)
+
+__ruta_aerea__ datos/paises.txt datos/imagenes/mapas/mapa1.ppm datos/imagenes/banderas/ datos/almacen_rutas.txt datos/imagenes/aviones/avion1.ppm datos/imagenes/aviones/mascara_avion1.pgm
+
+En este caso, veremos la Ruta 1:
+
+@image html R1.jpeg
+
+*/

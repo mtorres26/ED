@@ -1,3 +1,9 @@
+/**
+ * @file paises.cpp
+ * @brief Fichero con las implementaciones para la clase Paises
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
+ */
+
 #include "paises.h"
 #include <iostream>
 
@@ -8,11 +14,10 @@ using namespace std;
 // ///////////// //
 
 Paises::Paises() {
-    this->datos = {};
 }
 
 Paises::Paises(const set<Pais> &_datos) {
-    this->datos = _datos;
+    this->datos=_datos;
 }
 
 /*
@@ -30,14 +35,14 @@ Paises::const_iterator::const_iterator(const set<Pais>::const_iterator &_p){
 // ////////////// //
 
 
-void Paises::Insertar(const Pais &P) {
+void Paises::Insertar(const Pais &P){
     this->datos.insert(P);
 }
 
-void Paises::Borrar(const Pais &P) {
-    set<Pais>::iterator it = datos.find(P);
+void Paises::Borrar(const Pais &P){
+    set<Pais>::iterator it=datos.find(P);
 
-    if (it != datos.end()) {
+    if(it!=datos.end()){
         cout << "Pais eliminado con metodo Borrar";
         this->datos.erase(it);
     }

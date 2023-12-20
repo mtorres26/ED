@@ -1,11 +1,16 @@
-#ifndef PRACTICAFINAL_PAISES_H
-#define PRACTICAFINAL_PAISES_H
-
 /**
  * @file paises.h
  * @brief Cabecera para la clase Paises
  * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
  */
+
+#ifndef PRACTICAFINAL_PAISES_H
+#define PRACTICAFINAL_PAISES_H
+
+using namespace std;
+
+#include "pais.h"
+#include <set>
 
 using namespace std;
 
@@ -16,7 +21,7 @@ using namespace std;
 
   Para poder usar el TDA Paises se debe incluir el fichero
 
-  \#include "paises.h"
+  \#include <paises.h>
 
   @author Alberto Ortega Vílchez
   @author Miguel Torres Alonso
@@ -24,17 +29,15 @@ using namespace std;
 
 **/
 
-#include "pais.h"
-#include <set>
-#include <iostream>
-
-using namespace std;
-
 class Paises {
 private:
     set<Pais> datos;
-
 public:
+
+    // ///////////// //
+    // CONSTRUCTORES //
+    // ///////////// //
+
     /**
      * @brief Constructor primitivo. Crea un conjunto de Paises vacío.
      */
@@ -45,6 +48,10 @@ public:
      * @param datos Conjunto de paises a partir del cual creamos nuestro objeto.
      */
     Paises(const set<Pais> &datos);
+
+    // ////////////// //
+    // MÉTODOS VARIOS //
+    // ////////////// //
 
     /**
      * @brief Añade un pais 'P' a nuestro set de Pais (datos)
@@ -59,7 +66,20 @@ public:
     void Borrar(const Pais &P);
 
 
-    class iterator {
+    class const_iterator;
+
+    // Deberemos definir el iterador y const_iterator propio de nuestro set<Pais> datos
+    // Para ello seguiremos las diapositivas 11->14 del Tema Tipos Lineales STL.
+
+    // Al estar apoyado nuestro TDA sobre un contenedor "SET", nos resultará muy
+    // sencillo implementar las clases iterator y const_iterator.
+
+    // CLASE ITERATOR PARA PAISES
+
+    /**
+     * @brief Clase Iterator para el TDA Paises
+     */
+    class iterator{
     private:
         set<Pais>::iterator p;
     public:
@@ -69,23 +89,24 @@ public:
         /**
          * @brief Constructor primitivo - Crea un iterador nulo
          */
-        iterator() {
+        iterator(){
+            // No es necesario hacer nada
         }
 
         /**
          * @brief Constructor de copia
          * @param i Iterator pasado que copiaremos
          */
-        iterator(const iterator &i) {
-            p = i.p;
+        iterator(const iterator &i){
+            p=i.p;
         }
 
         /**
          * @brief Constructor de iterator a partir de un set<Pais>
          * @param p set<Pais> que usamos para crear nuestro iterator
          */
-        iterator(const set<Pais>::iterator &i) {
-            p = i;
+        iterator(const set<Pais>::iterator &i){
+            p=i;
         }
 
         // OPERADORES
@@ -96,7 +117,7 @@ public:
          * @pre El iterador es distinto de end()
          * @return Elemento de 'p' apuntado por el iterador
          */
-        const Pais &operator*() const {
+        const Pais & operator*()const{
             return *p;
         }
 
@@ -105,7 +126,7 @@ public:
          * @pre EL iterador no está al final del recorrido (Es distinto de end())
          * @return Devuelve el siguiente elemento, y establece el iterador a esa posición.
          */
-        iterator &operator++() {
+        iterator & operator++(){
             ++p;
             return *this;
         }
@@ -115,7 +136,7 @@ public:
          * @pre EL iterador no está al principio del recorrido (es distinto de begin())
          * @return Devuelve el elemento anterior, y establece el iterador a esa posición.
          */
-        iterator &operator--() {
+        iterator & operator--(){
             --p;
             return *this;
         }
@@ -125,11 +146,11 @@ public:
          * @param ot Un iterator
          * @return TRUE Si el iterador pasado como parámetro es igual que 'p' y FALSE en caso contrario
          */
-        bool operator==(const iterator &ot) {
-            bool iguales = false;
+        bool operator==(const iterator &ot){
+            bool iguales=false;
 
-            if (ot.p == p) {
-                iguales = true;
+            if(ot.p==p){
+                iguales=true;
             }
 
             return iguales;
@@ -140,9 +161,9 @@ public:
          * @param ot Un iterator
          * @return @return FALSE Si el iterador pasado como parámetro es igual que 'p' y TRUE en caso contrario
          */
-        bool operator!=(const iterator &ot) {
+        bool operator!=(const iterator &ot){
             // Nos podemos apoyar en el opeardor == que ya hemos creado.
-            return ot.p != p;
+            return ot.p!=p;
         }
 
         /**
@@ -150,10 +171,10 @@ public:
          * @param it Iterador que que "sustituye" al actual
          * @return Iterador actual modificado
          */
-        iterator &operator=(const iterator &ot) {
-            if (this->p != ot.p) {
-                this->p = ot.p;
-            }
+        iterator & operator=(const iterator &ot){
+            //if(this->p!=ot.p) {
+                this->p=ot.p;
+            //}
 
             return *this;
         }
@@ -170,7 +191,13 @@ public:
     };
 
 
-    class const_iterator {
+    // CLASE CONST_ITERATOR PARA PAISES
+
+    // Lo diseñaremos de manera realativamente igual que la class iterator
+    /**
+     * @brief Clase const_iterator para el TDA Paises
+     */
+    class const_iterator{
     private:
         set<Pais>::const_iterator p;
     public:
@@ -178,23 +205,24 @@ public:
         /**
          * @brief Constructor primitivo - Crea un iterador nulo
          */
-        const_iterator() {
+        const_iterator(){
+            // No es necesario hacer nada
         }
 
         /**
          * @brief Constructor de copia
          * @param i Iterator pasado que copiaremos
          */
-        const_iterator(const iterator &i) {
-            p = i.p;
+        const_iterator(const iterator &i){
+            p=i.p;
         }
 
         /**
          * @brief Constructor con parámetros
          * @param i set<Pais>::const_iterator a partir del cual creamos el nuestro
          */
-        const_iterator(const set<Pais>::const_iterator &i) {
-            p = i;
+        const_iterator(const set<Pais>::const_iterator &i){
+            p=i;
         }
 
         /**
@@ -203,7 +231,7 @@ public:
          * @pre El iterador es distinto de end()
          * @return Elemento de 'p' apuntado por el iterador
          */
-        const Pais &operator*() const {
+        const Pais & operator*()const{
             return *p;
         }
 
@@ -212,7 +240,7 @@ public:
          * @pre EL iterador no está al final del recorrido (Es distinto de end())
          * @return Devuelve el siguiente elemento, y establece el iterador a esa posición.
          */
-        const_iterator &operator++() {
+        const_iterator & operator++(){
             p++;
             return *this;
         }
@@ -222,7 +250,7 @@ public:
          * @pre EL iterador no está al principio del recorrido (es distinto de begin())
          * @return Devuelve el elemento anterior, y establece el iterador a esa posición.
          */
-        const_iterator &operator--() {
+        const_iterator & operator--(){
             p--;
             return *this;
         }
@@ -232,11 +260,11 @@ public:
          * @param ot Un iteraror
          * @return TRUE Si el iterador pasado como parámetro es igual que 'p' y FALSE en caso contrario
          */
-        bool operator==(const const_iterator &ot) const {
-            bool iguales = false;
+        bool operator==(const const_iterator &ot)const{
+            bool iguales=false;
 
-            if (p == ot.p) {
-                iguales = true;
+            if(p==ot.p){
+                iguales=true;
             }
 
             return iguales;
@@ -247,9 +275,9 @@ public:
          * @param ot Un iterator
          * @return @return FALSE Si el iterador pasado como parámetro es igual que 'p' y TRUE en caso contrario
          */
-        bool operator!=(const const_iterator &ot) const {
+        bool operator!=(const const_iterator &ot)const{
             // Nos podemos apoyar en el opeardor != que ya hemos creado en Punto.
-            return p != ot.p;
+            return p!=ot.p;
         }
 
         /**
@@ -257,10 +285,10 @@ public:
          * @param it const_iterator que que "sustituye" al actual
          * @return const_iterator actual modificado
          */
-        const_iterator &operator=(const const_iterator &ot) {
+        const_iterator & operator=(const const_iterator &ot){
             // Lo modificaremos sólo si es distinto al actual
-            if (this->p != ot.p) {
-                this->p = ot.p;
+            if(this->p!=ot.p) {
+                this->p=ot.p;
             }
 
             return *this;
@@ -272,11 +300,17 @@ public:
         friend class Paises;
     };
 
+    // ////////////////////////////// //
+    // FUNCIONES DE ITERADORES VARIOS //
+    // ////////////////////////////// //
+
+    // BEGIN //
+
     /**
      * @brief Establecemos la funcionalidad begin() del iterator
      * @return Iterador que apunta al primer Pais del conjunto de paises
      */
-    iterator begin() {
+    iterator begin(){
         iterator it;
         it.p = this->datos.begin();
         return it;
@@ -286,7 +320,7 @@ public:
      * @brief Establecemos la funcionalidad begin() del const_iterator
      * @return Iterador que apunta al primer Pais del conjunto de paises
      */
-    const_iterator begin() const {
+    const_iterator begin()const{
         const_iterator it;
         it.p = this->datos.begin();
         return it;
@@ -298,7 +332,7 @@ public:
      * @brief Establecemos la funcionalidad end() del iterator
      * @return Iterador que apunta al último Pais del conjunto de paises.
      */
-    iterator end() {
+    iterator end(){
         iterator it;
         it.p = this->datos.end();
         return it;
@@ -308,7 +342,7 @@ public:
      * @brief Establecemos la funcionalidad end() del const_iterator
      * @return Iterador que apunta al último Pais del conjunto de paises.
      */
-    const_iterator end() const {
+    const_iterator end()const{
         const_iterator it;
         it.p = this->datos.end();
         return it;
@@ -321,14 +355,14 @@ public:
      * @param p Pais que buscamos dentro del conjunto de paises
      * @return Iterador que apunta al Pais pasado como parámetro o end() si no existe.
      */
-    iterator find(const Pais &p) {
+    iterator find(const Pais &p){
         iterator it;
         set<Pais>::iterator i;
 
-        // Simplemente se itera sobre 'i' hasta que encontremos el Pais 'P'
-        for (i = this->datos.begin(); i != this->datos.end() && !((*i) == p); ++i);
+        // Simplemente se itera sobre 'i' hasta que encontremos el Pais 'p'
+        for (i=this->datos.begin(); i!=this->datos.end() && !((*i)==p);++i);
 
-        it.p = i;
+        it.p=i;
 
         // Es decir, se devuelve end() si no está, y si sí está, se devuelve el iterador correspondiente
         return it;
@@ -339,45 +373,68 @@ public:
      * @param p Punto que buscamos dentro del conjunto de paises
      * @return Iterador que apunta al Pais pasado como parámetro o end() si no existe.
      */
-    iterator find(const Punto &p) {
+    iterator find(const Punto &p){
         iterator it;
 
         set<Pais>::iterator ot;
 
         // Teniendo el operador == de Punto sobrecargado, podremos usarlo para esta búsqueda.
-        for (ot = datos.begin(); ot != datos.end() && ((ot->GetPunto()) == p); ot++);
+        for(ot=datos.begin(); ot!=datos.end() && !((ot->GetPunto())==p);ot++);
 
         // Se establece el valor de nuestro iterador en función de si ha encontrado el Punto entre los Paises
-        it.p = ot;
+        it.p=ot;
 
         // Es decir, se devuelve end() si no está, y si sí está, se devuelve el iterador correspondiente
         return it;
     }
 
-    friend istream &operator>>(istream &is, Paises &R) {
+    // //////////////////////////// //
+    // SOBRECARGA DE OPERADORES E/S //
+    // //////////////////////////// //
+
+    // ENTRADA (nos lo dan hecho)
+    /**
+     * @brief Operador de entrada para leeer un conjunto de paises
+     * @param is Flujo de datos de entrada
+     * @param R  Paises a leer
+     * @return Flujo de entrada
+     */
+    friend istream & operator>>(istream & is, Paises & R){
         Paises rlocal;
         //leemos el comentario
-        if (is.peek() == '#') {
+        if (is.peek()=='#'){
             string a;
-            getline(is, a);
+            getline(is,a);
         }
 
         Pais P;
-        while (is >> P) {
+        while (is>>P){
             rlocal.Insertar(P);
 
         }
-        R = rlocal;
+        R=rlocal;
         return is;
     }
 
-    friend ostream &operator<<(ostream &os, const Paises &R) {
+    // SALIDA (nos lo dan hecho) aunque queda mejor si en la salida usamos: os << *it sin el "\t"
+
+    /**
+     * @brief Operador de salida para mostrar por pantalla la información de un grupo de Paises.
+     * @param os Flujo de datos de salida
+     * @param R Paises cuya información se va a mostrar
+     * @return Flujo de salida
+     */
+    friend ostream & operator<<(ostream & os, const Paises &R){
+
         Paises::const_iterator it;
-        for (it = R.begin(); it != R.end(); ++it) {
-            os << *it << "\t";
+        for (it=R.begin(); it!=R.end(); ++it){
+            os<<*it<<"\t";
         }
         return os;
     }
 
 };
-#endif
+#endif //PRACTICAFINAL_PAISES_H
+
+
+

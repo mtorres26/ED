@@ -1,15 +1,15 @@
 /**
- * @file image.cpp
- * @brief Fichero con definiciones para los métodos primitivos de la clase Image
- *
+ * @file imagen.cpp
+ * @brief Fichero con las implementaciones para la clase Imagen
+ * @authors Alberto Ortega Vílchez, Miguel Torres Alonso
  */
 
 #include <cstring>
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include "imagen.h"
-#include "imagenES.h"
+#include <imagen.h>
+#include <imagenES.h>
 
 
 using namespace std;
@@ -55,7 +55,7 @@ void Imagen::Borrar() {
             delete[] data[i];
         }
         delete[] data;
-        data = nullptr; // Necesario??
+        // data = nullptr; // Necesario??
     }
 }
 
@@ -69,7 +69,7 @@ void Imagen::Copiar(const Imagen &I) {
         }
         for (int i = 0; i < nf; i++) {
             for (int j = 0; j < nc; j++) {
-                this->data[i][j] = I(i, j);
+                this->data[i][j] = I.data[i][j];
             }
         }
     }
@@ -203,8 +203,17 @@ void Imagen::LimpiarTransp() {
     }
 }
 
-/*
-Imagen Imagen::ExtraeImagen(int posi, int posj, int dimi, int dimj) {
 
+Imagen Imagen::ExtraeImagen(int posi, int posj, int dimi, int dimj) {
+    Imagen aux(dimi, dimj);
+
+    for(int i=posi;i<dimi;i++){
+        for(int j=posj;j<dimj;j++){
+            aux.data[i-posi][j-posj]=this->data[i][j];
+        }
+    }
+
+    return aux;
 }
-*/
+
+

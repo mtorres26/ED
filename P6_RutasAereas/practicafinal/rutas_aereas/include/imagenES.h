@@ -18,9 +18,9 @@
   * @see LeerTipoImagen
   */
 enum TipoImagen {IMG_DESCONOCIDO, ///< Tipo de imagen desconocido
-                 IMG_PGM,         ///< Imagen tipo PGM
-                 IMG_PPM          ///< Imagen tipo PPM
-                };
+    IMG_PGM,         ///< Imagen tipo PGM
+    IMG_PPM          ///< Imagen tipo PPM
+};
 
 
 /**
@@ -93,4 +93,3 @@ bool EscribirImagenPGM (const char nombre[], const unsigned char datos[], int f,
 #endif
 
 /* Fin Fichero: imagenES.h */
-
